@@ -1,0 +1,128 @@
+---
+title: "¡Es hora de paralelizar!"
+subtitle: "R-Ladies Chile"
+author: "Stephanie Orellana"
+format:
+  revealjs:
+    incremental: true 
+    theme: styles.scss
+---
+
+
+
+## Nuestro problema: código demora mucho tiempo
+
+::: {.incremental}
+- No lo hemos programado de forma eficiente
+- Nuestro proceso demora mucho por su naturaleza
+- Usa objetos que son muy lentos de cargar
+:::
+
+## Primeros pasos
+
+::: {.incremental}
+- Pensar una forma más eficiente de programar
+- Encontrar cuál orden es la que está haciendo que el código demore
+- Dividir cargas pesadas en porciones más pequeñas
+- Usar funciones más eficientes
+:::
+
+
+## Computación en paralelo
+
+<br>
+
+::: {.fragment .fade-in}
+`r emo::ji("rocket")` Es un tipo de computación donde [**múltiples tareas o partes de una tarea se realizan simultáneamente**]{style="color:#b084cc;"}.
+:::
+
+<br>
+
+::: {.fragment .fade-in}
+`r emo::ji("construction_worker")` La computación en paralelo [**distribuye las tareas entre varios procesadores o unidades de procesamiento**]{style="color:#b084cc;"}, lo que permite que se realicen múltiples operaciones al mismo tiempo. 
+:::
+
+#
+
+![](img/serie_paralelo.png){fig-align="center"}
+
+## Computación en paralelo
+
+::: {.fragment .fade-in}
+
+<br>
+
+`r emo::ji("hourglass")` Mejora de forma significativa el rendimiento y la velocidad de procesamiento en comparación con los sistemas de computación en serie, [**especialmente para tareas que pueden descomponerse en partes independientes que puedan ejecutarse en paralelo**]{style="color:#b084cc;"}. 
+:::
+
+<br>
+
+::: {.fragment .fade-in}
+`r emo::ji("pencil")` Se utiliza en una variedad de campos, como ciencia de datos, simulación numérica, procesamiento de imágenes, inteligencia artificial y muchas otras [**áreas donde se requiere un alto rendimiento computacional**]{style="color:#b084cc;"}.
+
+:::
+
+## En resumen ...
+
+- En el contexto de un código de R, implica dividir el problema en diferentes tareas que corren en sesiones independientes de R
+
+- Esto está limitado por el número de procesadores (núcleos) del tu computador
+
+- Y por otras características que veremos durante el taller
+
+## ¿Cómo se hace?
+
+Con paquetes:
+
+- [{parallel}](https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf)
+- [{doParallel}](https://cran.r-project.org/web/packages/doParallel/index.html)
+- [{future}](https://cran.r-project.org/web/packages/future/index.html)
+- [{furrr}](https://cran.r-project.org/web/packages/furrr/index.html)
+
+::: {.fragment .fade-in}
+[CRAN Task View: High-Performance and Parallel Computing with R](https://cran.r-project.org/web/views/HighPerformanceComputing.html)
+:::
+
+## Futures
+
+- En programación, un futuro es una abstracción de un valor que puede estar disponible en algún momento en el futuro. 
+- El estado de un futuro puede estar resuelto o no resuelto. Tan pronto como se resuelve, el valor está disponible instantáneamente. 
+
+- Si se consulta el valor mientras el futuro aún no se resuelve, el proceso actual se bloquea hasta que se resuelva el futuro. Pero se puede chequear el estado del futuro sin bloquearlo.
+
+## Futures
+
+- Cómo y cuándo se resuelven los futuros depende de qué estrategia se utilice para evaluarlos.
+
+  - Estrategia secuencial: se resuelve en la sesión R actual. 
+  - Asincrónica: evaluando expresiones en paralelo en la máquina actual o simultáneamente en un clúster de cómputo.
+
+## Paquete `{furrr}`
+
+Implementa el método de computación en paralelo provisto por el paquete `{future}` a las funciones de iteración del paquete `{purrr}`
+
+::: {layout-ncol=2}
+
+![](img/purrr.jpg){fig-align="center" width=300}
+
+![](img/furrr.png){fig-align="center" width=300}
+
+:::
+
+
+
+## ¿Qué necesito?
+
+- Un código que demore y que pueda dividirse en tareas independientes
+
+- Saber escribir funciones
+
+- Un contador de tiempo:
+
+  - `system.time()`
+  - `microbenchmark::microbenchmark()`
+  - Paquete `{tictoc}`
+  
+- Procesadores
+
+# `r emo::ji("computer")` Vamos!
