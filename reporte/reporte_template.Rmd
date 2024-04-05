@@ -1,0 +1,33 @@
+---
+title: "`r params$pais`"
+format: docx
+params:
+  pais: pais
+---
+
+
+## About `r params$pais`
+
+
+```{r, echo=FALSE, results="asis"}
+
+cat(unname(wikifacts::wiki_define(term = params$pais)))
+
+```
+
+## Life expectancy
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+dat <- gapminder::gapminder %>% 
+    filter(country == params$pais)
+  
+  ggplot(dat, aes(x = year, y = lifeExp)) +
+    geom_line(color = "darkturquoise")+
+    geom_point(, color = "darkturquoise")+
+    facet_grid(~country)+
+    theme(legend.position = "none")
+```
+
+
